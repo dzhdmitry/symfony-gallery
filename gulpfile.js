@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
-    less = require('gulp-less'),
+    sass = require('gulp-sass'),
+    scss = require('gulp-scss'),
     minify = require('gulp-minify'),
     cleanCSS = require('gulp-clean-css'),
     rename = require('gulp-rename'),
@@ -28,9 +29,9 @@ gulp.task('compile:js', function() {
 gulp.task('compile:css', function() {
     gulp.src([
         VENDOR_ROOT + '/bootstrap/dist/css/bootstrap.css',
-        RESOURCES_ROOT + '/css/**/*'
+        RESOURCES_ROOT + '/css/**/*.scss'
     ])
-        .pipe(less())
+        .pipe(sass())
         .pipe(cleanCSS())
         .pipe(concat("style.css"))
         .pipe(gulp.dest('./web/css'));

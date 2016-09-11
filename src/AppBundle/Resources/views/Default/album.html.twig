@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ album.name }}</h1>
+
+        <div>
+            {% for image in album.images %}
+                <a href="{{ path("image", {slug: image.slug, filename: image.originalFilename}) }}" target="_blank" class="thumbnail image-thumbnail">
+                    <img src="{{ path("image", {slug: image.slug, filename: image.originalFilename}) }}">
+                </a>
+            {% endfor %}
+                <div class="alert alert-info">
+                    Album has no images
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

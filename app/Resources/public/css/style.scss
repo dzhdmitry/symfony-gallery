@@ -1,0 +1,7 @@
+$thumbnail-size: 100px;
+
+.image-thumbnail {
+  display: inline-block;
+  max-width: $thumbnail-size;
+  max-height: $thumbnail-size;
+}
