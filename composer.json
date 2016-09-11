@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
         "symfony/phpunit-bridge": "~2.7"
     },
     "scripts": {
