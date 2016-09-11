@@ -27,20 +27,4 @@ class AlbumRepository extends EntityRepository
 
         return $query->getQuery()->execute();
     }
-
-    /**
-     * Get album by id with all its images
-     *
-     * @param $id
-     * @return Album|null
-     */
-    public function findOneWithAlbums($id)
-    {
-        $query = $this->createQueryBuilder("album")
-            ->leftJoin("album.images", "images")
-            ->where("album.id = :id")
-            ->setParameter("id", $id);
-
-        return $query->getQuery()->getSingleResult();
-    }
 }

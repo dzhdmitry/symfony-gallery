@@ -24,3 +24,4 @@
 /node_modules
 /web/images/*
 !web/images/.gitkeep
+.gulp-scss-cache/*

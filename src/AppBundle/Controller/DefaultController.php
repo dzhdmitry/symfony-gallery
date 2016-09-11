@@ -4,11 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Album;
 use AppBundle\Entity\Image;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
@@ -20,8 +20,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        //$albums = $this->getDoctrine()->getRepository(Album::class)->findAll();
-
         $albums = $this->getDoctrine()->getRepository(Album::class)->findAlbumsWithMaxImages();
 
         return [
@@ -33,21 +31,28 @@ class DefaultController extends Controller
      * @Template
      * @Route("/album/{id}", name="album")
      * @Route("/album/{id}/page/{page}", name="album_page")
-     * @param Request $request
      * @param $id
-     * @param null $page
+     * @param int $page
      * @return array
      */
-    public function albumAction(Request $request, $id, $page = null)
+    public function albumAction($id, $page = 1)
     {
-        $album = $this->getDoctrine()->getRepository(Album::class)->findOneWithAlbums($id);
+        $album = $this->getDoctrine()->getRepository(Album::class)->find($id);
 
         if (!$album) {
             throw $this->createNotFoundException();
         }
 
+        /** @var $pagination SlidingPagination */
+        $paginator = $this->get('knp_paginator');
+        $query = $this->getDoctrine()->getRepository(Image::class)->getAlbumImagesQuery($album);
+        $pagination = $paginator->paginate($query, $page);
+
+        $pagination->setUsedRoute("album_page");
+
         return [
-            'album' => $album
+            'album' => $album,
+            'pagination' => $pagination
         ];
     }
 
