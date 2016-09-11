@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    album_manager:
+        class: AppBundle\Service\AlbumManager
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
+    image_manager:
+        class: AppBundle\Service\ImageManager
+        arguments: [ "@doctrine.orm.entity_manager", "@knp_paginator" ]

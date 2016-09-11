@@ -1,5 +1,11 @@
 $thumbnail-size: 100px;
 
+a {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .image-thumbnail {
   display: inline-block;
   max-width: $thumbnail-size;
