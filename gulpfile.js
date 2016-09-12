@@ -13,7 +13,11 @@ var RESOURCES_ROOT = "./app/Resources/public";
 gulp.task('compile:js-vendor', function() {
     gulp.src([
             VENDOR_ROOT + '/jquery/dist/jquery.min.js',
-            VENDOR_ROOT + '/bootstrap/dist/js/bootstrap.min.js'
+            VENDOR_ROOT + '/bootstrap/dist/js/bootstrap.min.js',
+            VENDOR_ROOT + '/underscore/underscore-min.js',
+            VENDOR_ROOT + '/backbone/backbone-min.js',
+            VENDOR_ROOT + '/backbone.radio/build/backbone.radio.min.js',
+            VENDOR_ROOT + '/backbone.marionette/lib/backbone.marionette.min.js'
         ])
         .pipe(concat("libraries.js"))
         .pipe(gulp.dest('./web/js'));

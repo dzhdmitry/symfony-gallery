@@ -1,27 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <h1>Albums</h1>
+    <!-- -->
+{% endblock %}
 
-        {% for album in albums %}
-            <div>
-                <h4>
-                    <a href="{{ path("album", {id: album.id}) }}">{{ album.name }}</a>
-                </h4>
-
-                <div>
-                    {% for image in album.images %}
-                        <a href="{{ path("image", {slug: image.slug, filename: image.originalFilename}) }}" target="_blank" class="thumbnail image-thumbnail">
-                            <img src="{{ path("image", {slug: image.slug, filename: image.originalFilename}) }}">
-                        </a>
-                    {% endfor %}
-                </div>
-            </div>
-        {% else %}
-            <div class="alert alert-info">
-                There is no albums yet
-            </div>
-        {% endfor %}
-    </div>
+{% block javascripts %}
+    <script>
+        allAlbums.collection.reset({{ albums|raw }}, {
+            silent: true
+        });
+    </script>
 {% endblock %}

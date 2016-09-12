@@ -5,14 +5,18 @@
   "homepage": "https://github.com/dzhdmitry/symfony-gallery",
   "private": true,
   "dependencies": {
+    "backbone": "^1.3.3",
+    "backbone.marionette": "^3.0.0",
+    "backbone.radio": "^2.0.0",
     "bootstrap": "^3.3.6",
     "gulp": "~3.9.1",
     "gulp-clean-css": "~2.0.6",
     "gulp-concat": "~2.6.0",
     "gulp-jsonminify": "~1.0.0",
-    "gulp-sass": "^2.3.2",
     "gulp-minify": "~0.0.9",
     "gulp-rename": "~1.2.2",
-    "jquery": "~2"
+    "gulp-sass": "^2.3.2",
+    "jquery": "~2",
+    "underscore": "^1.8.3"
   }
 }

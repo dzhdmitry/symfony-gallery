@@ -12,6 +12,60 @@
 
     <body>
         {% block body %}{% endblock %}
+
+        <div id="region-application">
+            <div id="region-heading"></div>
+
+            <div id="region-content"></div>
+
+            <div id="region-pagination"></div>
+        </div>
+
+        <div id="viewport" class="container"></div>
+
+
+        <script type="x-template/underscore" id="template-page-albums">
+            <h1>Albums</h1>
+
+            <div class="albums-container"></div>
+        </script>
+
+        <script type="x-template/underscore" id="template-page-album">
+            <div class="album-container"></div>
+
+            <a href="/" class="spa-link">Albums</a>
+
+            <div class="images-container"></div>
+        </script>
+
+        <script type="x-template/underscore" id="template-album">
+            <h4>
+                <a href="/album/<%= id %>" class="spa-link">
+                    <%= name %>
+                </a>
+            </h4>
+
+            <div>
+                <% _.each(images, function(image) { %>
+                    <a href="/image/<%= image.slug %>/<%= image.original_filename %>" target="_blank" class="thumbnail image-thumbnail">
+                        <img src="/image/<%= image.slug %>/<%= image.original_filename %>">
+                    </a>
+                <% }); %>
+            </div>
+        </script>
+
+        <script type="x-template/underscore" id="template-album-info">
+            <h1><%= name %></h1>
+        </script>
+
+        <script type="x-template/underscore" id="template-image">
+            <a href="/image/<%= slug %>/<%= original_filename %>" target="_blank" class="thumbnail image-thumbnail">
+                <img src="/image/<%= slug %>/<%= original_filename %>">
+            </a>
+        </script>
+
+        <script src="{{ asset('js/libraries.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

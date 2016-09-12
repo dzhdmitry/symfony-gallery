@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Table(name="image")
@@ -28,6 +29,7 @@ class Image
     private $originalFilename;
 
     /**
+     * @Exclude
      * @ORM\Column(name="filename", type="string", length=255)
      */
     private $filename;
