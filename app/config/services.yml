@@ -11,3 +11,11 @@ services:
     image_manager:
         class: AppBundle\Service\ImageManager
         arguments: [ "@doctrine.orm.entity_manager", "@knp_paginator" ]
+
+    serializer_proxy:
+        class: AppBundle\Service\SerializerProxy
+        arguments: [ "@jms_serializer", "json" ]
+
+    pagination_renderer:
+        class: AppBundle\Service\PaginationRenderer
+        arguments: [ "@knp_paginator.twig.extension.pagination", "@twig" ]

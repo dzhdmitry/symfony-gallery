@@ -11,18 +11,15 @@
     </head>
 
     <body>
-        {% block body %}{% endblock %}
+        <div id="viewport" class="container"></div>
 
-        <div id="region-application">
+        <script type="x-template/underscore" id="region-application">
             <div id="region-heading"></div>
 
             <div id="region-content"></div>
 
             <div id="region-pagination"></div>
-        </div>
-
-        <div id="viewport" class="container"></div>
-
+        </script>
 
         <script type="x-template/underscore" id="template-page-albums">
             <h1>Albums</h1>

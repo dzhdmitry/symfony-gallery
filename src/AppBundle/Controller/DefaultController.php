@@ -19,7 +19,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $albums = $this->get("album_manager")->findAlbums();
-        $serialized = $this->get("jms_serializer")->serialize($albums, "json");
+        $serialized = $this->get("serializer_proxy")->serialize($albums);
 
         if ($request->isXmlHttpRequest()) {
             return JsonResponse::create(json_decode($serialized));
@@ -31,7 +31,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Template
      * @Route("/album/{id}", name="album")
      * @Route("/album/{id}/page/{page}", name="album_page")
      * @param Request $request
@@ -44,12 +43,12 @@ class DefaultController extends Controller
         if ($request->isXmlHttpRequest()) {
             $album = $this->get("album_manager")->findAlbumOr404($id);
             $pagination = $this->get("image_manager")->getAlbumImagesPagination($album, $page);
-            $serialized = $this->get("jms_serializer")->serialize($pagination->getItems(), "json");
-            $pp = $this->get("knp_paginator.twig.extension.pagination")->render($this->get("twig"), $pagination);
+            $data = $this->get("serializer_proxy")->serialize($pagination->getItems());
+            $paginationHtml = $this->get("pagination_renderer")->render($pagination);
 
             return JsonResponse::create([
-                'data' => json_decode($serialized),
-                'pagination' => $pp
+                'data' => json_decode($data),
+                'pagination' => $paginationHtml
             ]);
         } else {
             return $this->forward("AppBundle:Default:index");

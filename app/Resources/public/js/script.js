@@ -50,12 +50,14 @@ var ImagesView = (function() {
 
 // Application
 var RootView = Mn.View.extend({
-    el: '#region-application',
-    template: false,
+    template: '#region-application',
     regions: {
         heading: '#region-heading',
         main: '#region-content',
         pagination: '#region-pagination'
+    },
+    events: {
+        'click a.spa-link': spaClick
     }
 });
 
@@ -65,9 +67,7 @@ var AlbumInfoView = Mn.View.extend({
 
 var PaginationView = Mn.View.extend({
     events: {
-        'click a': function(e) {
-            spaClick(e);
-        }
+        'click a': spaClick
     }
 });
 
@@ -105,6 +105,9 @@ var Controller = {
 
         currentImages.collection.fetch({
             url: url,
+            beforeSend: function() {
+                app.getView().$el.css("opacity", 0.7);
+            },
             success: function(collection, data) {
                 var albumPage = new Pages.Album(),
                     albumInfo = new AlbumInfoView({
@@ -118,6 +121,9 @@ var Controller = {
                 app.getView().getRegion("pagination").show(pagination);
                 albumPage.getRegion("album").show(albumInfo);
                 albumPage.getRegion("images").show(currentImages);
+            },
+            complete: function() {
+                app.getView().$el.css("opacity", 1);
             }
         });
     }
@@ -132,7 +138,10 @@ var AppRouter = Mn.AppRouter.extend({
     albums: function() {
         var albumsPage = new Pages.Albums();
 
+        allAlbums = new AlbumsView();
+
         app.getView().getRegion("main").show(albumsPage);
+        app.getView().getRegion("pagination").destroy();
         albumsPage.getRegion("albums").show(allAlbums);
     },
     album: function(id) {
@@ -143,9 +152,9 @@ var AppRouter = Mn.AppRouter.extend({
     }
 });
 
-var app = new Application();
-var router = new AppRouter();
-var allAlbums = new AlbumsView();
+var app = new Application(),
+    router = new AppRouter(),
+    allAlbums = new AlbumsView();
 
 function spaClick(e) {
     if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
@@ -161,6 +170,4 @@ function spaClick(e) {
 
 $(function() {
     app.start();
-
-    $(document).on('click', 'a.spa-link', spaClick);
 });

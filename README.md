@@ -1,4 +1,4 @@
 Gallery
 =======
 
-A Symfony project created on September 10, 2016, 10:39 pm.
+Gallery Symfony 3 app
