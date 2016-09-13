@@ -11,27 +11,31 @@
     </head>
 
     <body>
-        <div id="viewport" class="container"></div>
-
-        <script type="x-template/underscore" id="region-application">
+        <div id="viewport" class="container">
             <div id="region-heading"></div>
 
             <div id="region-content"></div>
 
             <div id="region-pagination"></div>
+        </div>
+
+        <script type="x-template/underscore" id="template-heading-albums">
+            <h1>Albums</h1>
+        </script>
+
+        <script type="x-template/underscore" id="template-heading-album">
+            <h1>Album: <%= name %></h1>
+
+            <p>
+                <a href="/" class="spa-link">Albums</a>
+            </p>
         </script>
 
         <script type="x-template/underscore" id="template-page-albums">
-            <h1>Albums</h1>
-
             <div class="albums-container"></div>
         </script>
 
         <script type="x-template/underscore" id="template-page-album">
-            <div class="album-container"></div>
-
-            <a href="/" class="spa-link">Albums</a>
-
             <div class="images-container"></div>
         </script>
 

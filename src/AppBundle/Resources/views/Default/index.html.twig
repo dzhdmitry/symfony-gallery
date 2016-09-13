@@ -2,8 +2,8 @@
 
 {% block javascripts %}
     <script>
-        allAlbums.collection.reset({{ albums|raw }}, {
-            silent: true
-        });
+        var initialData = {
+            albums: {{ albums|raw }}
+        };
     </script>
 {% endblock %}

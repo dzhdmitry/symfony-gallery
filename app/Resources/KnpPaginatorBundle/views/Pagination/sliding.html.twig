@@ -5,7 +5,7 @@
                 {% if first is defined and current != first %}
                     <li class="first">
                         <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">
-                            <span class="glyphicon glyphicon-step-backward"></span>
+                            <span class="glyphicon glyphicon-fast-backward"></span>
                         </a>
                     </li>
                 {% endif %}
@@ -23,7 +23,7 @@
                 {% if last is defined and current != last %}
                     <li class="last">
                         <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">
-                            <span class="glyphicon glyphicon-step-forward"></span>
+                            <span class="glyphicon glyphicon-fast-forward"></span>
                         </a>
                     </li>
                 {% endif %}

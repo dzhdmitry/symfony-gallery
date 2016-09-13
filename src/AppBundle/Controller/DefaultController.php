@@ -32,13 +32,23 @@ class DefaultController extends Controller
 
     /**
      * @Route("/album/{id}", name="album")
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse|array
+     */
+    public function albumAction(Request $request, $id)
+    {
+        return $this->albumPageAction($request, $id, 1);
+    }
+
+    /**
      * @Route("/album/{id}/page/{page}", name="album_page")
      * @param Request $request
      * @param $id
      * @param int $page
-     * @return array
+     * @return JsonResponse|array
      */
-    public function albumAction(Request $request, $id, $page = 1)
+    public function albumPageAction(Request $request, $id, $page)
     {
         if ($request->isXmlHttpRequest()) {
             $album = $this->get("album_manager")->findAlbumOr404($id);
