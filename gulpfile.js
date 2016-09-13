@@ -1,11 +1,9 @@
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
     sass = require('gulp-sass'),
-    scss = require('gulp-scss'),
     minify = require('gulp-minify'),
     cleanCSS = require('gulp-clean-css'),
-    rename = require('gulp-rename'),
-    jsonminify = require('gulp-jsonminify');
+    coffee = require('gulp-coffee');
 
 var VENDOR_ROOT = "./node_modules";
 var RESOURCES_ROOT = "./app/Resources/public";
@@ -24,7 +22,8 @@ gulp.task('compile:js-vendor', function() {
 });
 
 gulp.task('compile:js', function() {
-    gulp.src(RESOURCES_ROOT + '/js/**/*.js')
+    gulp.src(RESOURCES_ROOT + '/js/**/*.coffee')
+        .pipe(coffee())
         .pipe(concat("app.js"))
         .pipe(minify())
         .pipe(gulp.dest('./web/js'));
