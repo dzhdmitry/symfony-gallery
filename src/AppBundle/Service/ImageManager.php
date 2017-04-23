@@ -29,22 +29,6 @@ class ImageManager
     }
 
     /**
-     * @param $slug
-     * @param $filename
-     * @return Image|null
-     */
-    public function findImageOr404($slug, $filename)
-    {
-        $image = $this->em->getRepository(Image::class)->fundBySlugAndOriginalFilename($slug, $filename);
-
-        if (!$image) {
-            throw new NotFoundHttpException("Image not found");
-        }
-
-        return $image;
-    }
-
-    /**
      * @param $album
      * @param int $page
      * @return SlidingPagination
@@ -58,29 +42,5 @@ class ImageManager
         $pagination->setUsedRoute("album_page");
 
         return $pagination;
-    }
-
-    /**
-     * @param $filename
-     * @param $originalFilename
-     * @param bool $download
-     * @return BinaryFileResponse
-     */
-    public function imageResponse($filename, $originalFilename = null, $download = false)
-    {
-        $filePath = __DIR__ . "/../../../web/images/" . $filename;
-        $response = new BinaryFileResponse($filePath, 200, [], true);
-
-        if ($download) {
-            if (!$originalFilename) {
-                $originalFilename = $filename;
-            }
-
-            $ascii = mb_convert_encoding($originalFilename, "ascii");
-
-            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $originalFilename, $ascii);
-        }
-
-        return $response;
     }
 }

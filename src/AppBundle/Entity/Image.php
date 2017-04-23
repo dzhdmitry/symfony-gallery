@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * @ORM\Table(name="image")
@@ -147,7 +148,17 @@ class Image
      */
     public function getAbsolutePath()
     {
-        return __DIR__."/../../../web/images/" . $this->getFilename();
+        return __DIR__ . "/../../../web/images/" . $this->getFilename();
+    }
+
+    /**
+     * @VirtualProperty
+     *
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return "/images/" . $this->getFilename();
     }
 
     /**

@@ -2,23 +2,26 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Album;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
     /**
      * @Template
      * @Route("/", name="albums")
+     *
      * @param Request $request
-     * @return array
+     * @return JsonResponse|array
      */
     public function indexAction(Request $request)
     {
-        $albums = $this->get("album_manager")->findAlbums();
+        $albums = $this->getDoctrine()->getManager()->getRepository(Album::class)->findAlbumsWithMaxImages();
         $serialized = $this->get("serializer_proxy")->serialize($albums);
 
         if ($request->isXmlHttpRequest()) {
@@ -33,25 +36,26 @@ class DefaultController extends Controller
     /**
      * @Route("/album/{id}", name="album")
      * @param Request $request
-     * @param $id
-     * @return JsonResponse|array
+     *
+     * @param Album $album
+     * @return JsonResponse|Response
      */
-    public function albumAction(Request $request, $id)
+    public function albumAction(Request $request, Album $album)
     {
-        return $this->albumPageAction($request, $id, 1);
+        return $this->albumPageAction($request, $album, 1);
     }
 
     /**
      * @Route("/album/{id}/page/{page}", name="album_page")
      * @param Request $request
-     * @param $id
+     *
+     * @param Album $album
      * @param int $page
-     * @return JsonResponse|array
+     * @return JsonResponse|Response
      */
-    public function albumPageAction(Request $request, $id, $page)
+    public function albumPageAction(Request $request, Album $album, $page)
     {
         if ($request->isXmlHttpRequest()) {
-            $album = $this->get("album_manager")->findAlbumOr404($id);
             $pagination = $this->get("image_manager")->getAlbumImagesPagination($album, $page);
             $data = $this->get("serializer_proxy")->serialize($pagination->getItems());
             $paginationHtml = $this->get("pagination_renderer")->render($pagination);
@@ -63,19 +67,5 @@ class DefaultController extends Controller
         } else {
             return $this->forward("AppBundle:Default:index");
         }
-    }
-
-    /**
-     * @Route("/image/{slug}/{filename}", name="image")
-     * @param $slug
-     * @param $filename
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-     */
-    public function imageAction($slug, $filename)
-    {
-        $imageManager = $this->get("image_manager");
-        $image = $imageManager->findImageOr404($slug, $filename);
-
-        return $imageManager->imageResponse($image->getFilename(), $image->getOriginalFilename());
     }
 }

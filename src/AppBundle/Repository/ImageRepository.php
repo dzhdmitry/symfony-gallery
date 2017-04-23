@@ -11,7 +11,7 @@ class ImageRepository extends EntityRepository
     /**
      * @param $slug
      * @param $filename
-     * @return Image|null
+     * @return Image|null|object
      */
     public function fundBySlugAndOriginalFilename($slug, $filename)
     {

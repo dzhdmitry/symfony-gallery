@@ -40,16 +40,16 @@
 
             <div>
                 <% _.each(images, function(image) { %>
-                    <a href="/image/<%= image.slug %>/<%= image.original_filename %>" target="_blank" class="thumbnail image-thumbnail">
-                        <img src="/image/<%= image.slug %>/<%= image.original_filename %>">
+                    <a href="<%= image.web_path %>" target="_blank" class="thumbnail image-thumbnail">
+                        <img src="<%= image.web_path %>">
                     </a>
                 <% }); %>
             </div>
         </script>
 
         <script type="x-template/underscore" id="template-image">
-            <a href="/image/<%= slug %>/<%= original_filename %>" target="_blank" class="thumbnail image-thumbnail">
-                <img src="/image/<%= slug %>/<%= original_filename %>">
+            <a href="<%= web_path %>" target="_blank" class="thumbnail image-thumbnail">
+                <img src="<%= web_path %>">
             </a>
         </script>
 

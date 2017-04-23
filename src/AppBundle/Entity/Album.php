@@ -27,9 +27,6 @@ class Album
      */
     private $images;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->images = new \Doctrine\Common\Collections\ArrayCollection();
