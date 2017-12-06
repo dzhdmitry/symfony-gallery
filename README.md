@@ -1,7 +1,7 @@
 Gallery
 =======
 
-Gallery Symfony 3 app
+Gallery Symfony app
 
 ## Testing
 

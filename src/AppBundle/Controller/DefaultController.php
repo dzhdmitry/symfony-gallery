@@ -14,27 +14,27 @@ class DefaultController extends Controller
 {
     /**
      * @Template
-     * @Route("/", name="albums")
+     * @Route("/")
      *
      * @param Request $request
      * @return JsonResponse|array
      */
     public function indexAction(Request $request)
     {
-        $albums = $this->getDoctrine()->getManager()->getRepository(Album::class)->findAlbumsWithMaxImages();
-        $serialized = $this->get("serializer_proxy")->serialize($albums);
+        $albums = $this->getDoctrine()->getRepository(Album::class)->findAlbumsWithMaxImages();
+        $serializer = $this->get('serializer_proxy');
 
         if ($request->isXmlHttpRequest()) {
-            return JsonResponse::create(json_decode($serialized));
+            return JsonResponse::create($serializer->toArray($albums));
         } else {
             return [
-                'albums' => $serialized
+                'albums' => $serializer->serialize($albums)
             ];
         }
     }
 
     /**
-     * @Route("/album/{id}", name="album")
+     * @Route("/album/{id}")
      * @param Request $request
      *
      * @param Album $album
@@ -46,7 +46,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/album/{id}/page/{page}", name="album_page")
+     * @Route("/album/{id}/page/{page}")
      * @param Request $request
      *
      * @param Album $album
@@ -56,16 +56,16 @@ class DefaultController extends Controller
     public function albumPageAction(Request $request, Album $album, $page)
     {
         if ($request->isXmlHttpRequest()) {
-            $pagination = $this->get("image_manager")->getAlbumImagesPagination($album, $page);
-            $data = $this->get("serializer_proxy")->serialize($pagination->getItems());
-            $paginationHtml = $this->get("pagination_renderer")->render($pagination);
+            $pagination = $this->get('image_manager')->getAlbumImagesPagination($album, $page);
+            $data = $this->get('serializer_proxy')->toArray($pagination->getItems());
+            $paginationHtml = $this->get('pagination_renderer')->render($pagination);
 
             return JsonResponse::create([
-                'data' => json_decode($data),
+                'data' => $data,
                 'pagination' => $paginationHtml
             ]);
         } else {
-            return $this->forward("AppBundle:Default:index");
+            return $this->forward('AppBundle:Default:index');
         }
     }
 }

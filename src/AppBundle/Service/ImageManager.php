@@ -39,7 +39,7 @@ class ImageManager
         $query = $this->em->getRepository(Image::class)->getAlbumImagesQuery($album);
         $pagination = $this->paginator->paginate($query, $page);
 
-        $pagination->setUsedRoute("album_page");
+        $pagination->setUsedRoute('app_default_albumpage');
 
         return $pagination;
     }

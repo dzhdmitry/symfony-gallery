@@ -7,31 +7,32 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
- * @ORM\Table(name="image")
+ * @ORM\Table
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Image
 {
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
-     * @ORM\Column(name="originalFilename", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $originalFilename;
 
     /**
      * @Exclude
-     * @ORM\Column(name="filename", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $filename;
 
@@ -42,8 +43,6 @@ class Image
     private $album;
 
     /**
-     * Get id
-     *
      * @return integer 
      */
     public function getId()
@@ -52,8 +51,6 @@ class Image
     }
 
     /**
-     * Set slug
-     *
      * @param string $slug
      * @return Image
      */
@@ -65,8 +62,6 @@ class Image
     }
 
     /**
-     * Get slug
-     *
      * @return string 
      */
     public function getSlug()
@@ -75,8 +70,6 @@ class Image
     }
 
     /**
-     * Set originalFilename
-     *
      * @param string $originalFilename
      * @return Image
      */
@@ -88,8 +81,6 @@ class Image
     }
 
     /**
-     * Get originalFilename
-     *
      * @return string 
      */
     public function getOriginalFilename()
@@ -98,8 +89,6 @@ class Image
     }
 
     /**
-     * Set filename
-     *
      * @param string $filename
      * @return Image
      */
@@ -111,8 +100,6 @@ class Image
     }
 
     /**
-     * Get filename
-     *
      * @return string 
      */
     public function getFilename()
@@ -121,8 +108,6 @@ class Image
     }
 
     /**
-     * Set album
-     *
      * @param Album $album
      * @return Image
      */
@@ -134,8 +119,6 @@ class Image
     }
 
     /**
-     * Get album
-     *
      * @return Album 
      */
     public function getAlbum()
@@ -148,7 +131,7 @@ class Image
      */
     public function getAbsolutePath()
     {
-        return __DIR__ . "/../../../web/images/" . $this->getFilename();
+        return __DIR__ . '/../../../web/images/' . $this->getFilename();
     }
 
     /**
@@ -158,7 +141,7 @@ class Image
      */
     public function getWebPath()
     {
-        return "/images/" . $this->getFilename();
+        return '/images/' . $this->getFilename();
     }
 
     /**

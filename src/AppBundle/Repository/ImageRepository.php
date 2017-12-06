@@ -3,24 +3,10 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Album;
-use AppBundle\Entity\Image;
 use Doctrine\ORM\EntityRepository;
 
 class ImageRepository extends EntityRepository
 {
-    /**
-     * @param $slug
-     * @param $filename
-     * @return Image|null|object
-     */
-    public function fundBySlugAndOriginalFilename($slug, $filename)
-    {
-        return $this->findOneBy([
-            'slug' => $slug,
-            'originalFilename' => $filename
-        ]);
-    }
-
     /**
      * @param Album $album
      * @return \Doctrine\ORM\Query

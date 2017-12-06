@@ -3,14 +3,14 @@
 namespace AppBundle\Service;
 
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\Serializer;
 
 class SerializerProxy
 {
-    const FORMAT = "json";
+    const DEFAULT_FORMAT = "json";
 
     /**
-     * @var SerializerInterface
+     * @var Serializer
      */
     protected $serializer;
 
@@ -19,7 +19,7 @@ class SerializerProxy
      */
     protected $format;
 
-    public function __construct(SerializerInterface $serializer, $format = self::FORMAT)
+    public function __construct(Serializer $serializer, $format = self::DEFAULT_FORMAT)
     {
         $this->serializer = $serializer;
         $this->format = $format;
@@ -33,5 +33,15 @@ class SerializerProxy
     public function serialize($data, SerializationContext $context = null)
     {
         return $this->serializer->serialize($data, $this->format, $context);
+    }
+
+    /**
+     * @param $data
+     * @param SerializationContext|null $context
+     * @return array
+     */
+    public function toArray($data, SerializationContext $context = null)
+    {
+        return $this->serializer->toArray($data, $context);
     }
 }

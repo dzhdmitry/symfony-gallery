@@ -2,23 +2,24 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="album")
+ * @ORM\Table
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AlbumRepository")
  */
 class Album
 {
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
@@ -29,12 +30,10 @@ class Album
 
     public function __construct()
     {
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**
-     * Get id
-     *
      * @return integer 
      */
     public function getId()
@@ -43,8 +42,6 @@ class Album
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Album
      */
@@ -56,8 +53,6 @@ class Album
     }
 
     /**
-     * Get name
-     *
      * @return string 
      */
     public function getName()
@@ -66,8 +61,6 @@ class Album
     }
 
     /**
-     * Add images
-     *
      * @param Image $image
      * @return Album
      */
@@ -79,19 +72,15 @@ class Album
     }
 
     /**
-     * Remove images
-     *
-     * @param Image $images
+     * @param Image $image
      */
-    public function removeImage(Image $images)
+    public function removeImage(Image $image)
     {
-        $this->images->removeElement($images);
+        $this->images->removeElement($image);
     }
 
     /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return ArrayCollection|Image[]
      */
     public function getImages()
     {
